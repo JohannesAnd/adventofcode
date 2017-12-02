@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const input = fs.readFileSync('./input.txt', 'utf-8');
 
-const isDivisible = (n, d) => n / d === Math.round(n / d) && n / d !== 1;
+const isDivisible = (n, d) => !(n % d) && n !== d;
 
 const result = input
   .split('\n')
