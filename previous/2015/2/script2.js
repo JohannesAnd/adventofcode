@@ -2,14 +2,17 @@ const fs = require('fs');
 
 const input = fs.readFileSync('./input.txt', 'utf-8');
 
-const directions = {
-  '(': 1,
-  ')': -1
+const getArea = (a, d) => {
+  const s1 = 2 * (d[0] + d[1]);
+  const s2 = 2 * (d[1] + d[2]);
+  const s3 = 2 * (d[0] + d[2]);
+
+  return a + Math.min(s1, s2, s3) + d[0] * d[1] * d[2];
 };
 
 const result = input
-  .split('')
-  .reduce((s, v) => s.concat([s[s.length - 1] + directions[v]]), [0])
-  .indexOf(-1);
+  .split('\n')
+  .map(s => s.split('x').map(Number))
+  .reduce(getArea, 0);
 
 console.log(result);
