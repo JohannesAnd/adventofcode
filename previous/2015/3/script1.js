@@ -23,10 +23,7 @@ const result = Object.keys(
     .split('')
     .reduce((a, d) => a.concat(getNewPosition(a, d)), [{ x: 0, y: 0 }])
     .map(p => String(p.x) + '|' + String(p.y))
-    .reduce(
-      (a, c) => Object.defineProperty(a, c, { value: true, enumerable: true }),
-      {}
-    )
+    .reduce((a, c) => Object.defineProperty(a, c, { enumerable: true }), {})
 ).length;
 
 console.log(result);
