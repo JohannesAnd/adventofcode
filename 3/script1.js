@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const input = 289326;
 
 const getLength = n => {

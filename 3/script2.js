@@ -1,16 +1,9 @@
-const fs = require('fs');
-
 const input = 289326;
 
-const getLength = n => {
-  const diameter = Math.ceil(Math.sqrt(n));
-  return diameter;
-};
+let number = 1;
 
-const result = getLength(input);
-
-console.log(result);
-
-for (let i = 0; i < 26; i++) {
-  console.log(i, getLength(i));
+while (number < input) {
+  // Do stuff
 }
+
+console.log(number);
