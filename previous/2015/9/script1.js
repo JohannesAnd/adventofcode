@@ -4,13 +4,13 @@ const input = fs.readFileSync('./input.txt', 'utf-8');
 
 const computeDiff = s => {
   const newString = s
-    .substring(0)
-    .replace(/\\/g, '\\\\')
-    .replace(/"/g, '\\"');
+    .substring(1, s.length - 1)
+    .replace(/\\\\/g, ',')
+    .replace(/\\x[A-Fa-f0-9]{2}/g, '_')
+    .replace(/\\"/g, '.');
 
   console.log(s, newString);
-
-  return newString.length + 2 - s.length;
+  return s.length - newString.length;
 };
 
 const result = input
