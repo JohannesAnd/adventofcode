@@ -1,25 +1,43 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('./input.txt', 'utf-8');
+const genAFactor = 16807;
+const genBFactor = 48271;
+const divider = 2147483647;
 
-const layers = input.split('\n').map(i => {
-  const [from, to] = i.split(': ').map(s => s.trim());
+let i = 0;
+let count = 0;
+let genA = 699;
+let genB = 124;
 
-  return {
-    pos: Number(from),
-    round: Math.max(1, Number(to) + Number(to) - 2)
-  };
-});
+const getA = () => {
+  while (true) {
+    const newGenA = (genA * genAFactor) % divider;
 
-let delay = -1;
-let severity = 1000;
+    if (newGenA % 4 === 0) {
+      genA = newGenA;
+    }
+  }
+};
 
-while (severity > 0) {
-  delay++;
+const getB = () => {
+  while (true) {
+    const newGenB = (genB * genBFactor) % divider;
 
-  severity = layers
-    .map(({ pos, round }) => (pos + delay) % round === 0)
-    .reduce((s, v) => s + v, 0);
+    if (newGenB % 8 === 0) {
+      genB = newGenB;
+    }
+  }
+};
+
+while (i < 5000000) {
+  getA();
+  getB();
+  console.log(genA);
+  if (genA % 65536 === genB % 65536) {
+    count++;
+    console.log(count);
+  }
+  i++;
 }
 
-console.log(delay);
+console.log(count);

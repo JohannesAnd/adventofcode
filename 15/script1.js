@@ -6,21 +6,17 @@ const divider = 2147483647;
 
 let i = 0;
 let count = 0;
-let genA = 65;
-let genB = 8921;
+let genA = 699;
+let genB = 124;
 
 while (i < 40000000) {
   genA = (genA * genAFactor) % divider;
   genB = (genB * genBFactor) % divider;
 
-  if (genA === 65) {
-    console.log((genA * genAFactor) % divider);
-  }
-
-  if (genA.toString(2).slice(-16) === genB.toString(2).slice(-16)) {
+  if (genA % 65536 === genB % 65536) {
     count++;
-    console.log(count, (i / 400000).toFixed(2), '%');
   }
+  i++;
 }
 
 console.log(count);
