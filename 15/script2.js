@@ -10,21 +10,25 @@ let genA = 699;
 let genB = 124;
 
 const getA = () => {
+  let newGenA = genA;
   while (true) {
-    const newGenA = (genA * genAFactor) % divider;
+    newGenA = (newGenA * genAFactor) % divider;
 
     if (newGenA % 4 === 0) {
       genA = newGenA;
+      return;
     }
   }
 };
 
 const getB = () => {
+  let newGenB = genB;
   while (true) {
-    const newGenB = (genB * genBFactor) % divider;
+    newGenB = (newGenB * genBFactor) % divider;
 
     if (newGenB % 8 === 0) {
       genB = newGenB;
+      return;
     }
   }
 };
@@ -32,10 +36,8 @@ const getB = () => {
 while (i < 5000000) {
   getA();
   getB();
-  console.log(genA);
   if (genA % 65536 === genB % 65536) {
     count++;
-    console.log(count);
   }
   i++;
 }
