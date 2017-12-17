@@ -2,12 +2,19 @@ const fs = require('fs');
 
 const step = 366;
 
-let buffer = [0];
 let pointer = 0;
 
+let zeroPointer = 0;
+let afterZeroValue = false;
+
 for (let i = 1; i <= 50000000; i++) {
-  pointer = (pointer + step) % buffer.length + 1;
-  buffer.splice(pointer, 0, i);
+  pointer = (pointer + step) % i + 1;
+
+  if (pointer < zeroPointer) {
+    zeroPointer++;
+  } else if (pointer === zeroPointer + 1) {
+    afterZeroValue = i;
+  }
 }
 
-console.log(buffer[buffer.indexOf(0) + 1]);
+console.log(afterZeroValue);
