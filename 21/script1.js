@@ -12,11 +12,17 @@ const transform = input.split('\n').reduce((a, r) => {
 
 let image = [['.', '#', '.'], ['.', '.', '#'], ['#', '#', '#']];
 
-for (let i = 0; i < 5; i++) {
-  if (image.length % 2 === 0) {
-    for (let x = 0; x < image.length / 2; x++) {
-      for (let y = 0; y < image.length / 2; y++) {}
-    }
-  } else {
+const iterations = 12;
+
+for (let i = 0; i < iterations; i++) {
+  const transformSize = image.length % 2 === 0 ? 2 : 3;
+  const grids = image.length / transformSize;
+  const newSize = grids * (transformSize + 1);
+  const newImage = new Array(newSize)
+    .fill(false)
+    .map(() => new Array(newSize).fill('-'));
+
+  for (let y = 0; y < grids; y++) {
+    for (let x = 0; x < grids; x++) {}
   }
 }
