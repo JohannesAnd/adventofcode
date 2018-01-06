@@ -1,36 +1,44 @@
-const fs = require('fs');
+let done = false;
+let a = 1;
+let h = 0;
+let g = 0;
 
-const input = fs.readFileSync('./input.txt', 'utf-8');
+let b = 99;
+let c = b;
 
-const instructions = input.split('\n');
+let f = 1;
+do {
+  let d = 2;
+  do {
+    let e = 2;
+    do {
+      let g = d;
 
-const registers = { a: 1, b: 0, c: 0, e: 0, f: 0, g: 0, h: 0 };
+      g *= e;
+      g -= b;
 
-let pointer = 0;
+      if (g === 0) {
+        f = 0;
+      }
 
-while (pointer >= 0 && pointer < instructions.length) {
-  const [op, arg1, arg2] = instructions[pointer].split(' ');
+      e += 1;
+      g = e;
+      g -= b;
+    } while (g !== 0);
 
-  const val1 = arg1 in registers ? registers[arg1] : Number(arg1);
-  const val2 = arg2 in registers ? registers[arg2] : Number(arg2);
-
-  switch (op) {
-    case 'set':
-      registers[arg1] = val2;
-      pointer++;
-      break;
-    case 'sub':
-      registers[arg1] -= val2;
-      pointer++;
-      break;
-    case 'mul':
-      registers[arg1] *= val2;
-      pointer++;
-      break;
-    case 'jnz':
-      pointer += val1 === 0 ? 1 : val2;
-      break;
+    d += 1;
+    g = d;
+    g -= b;
+  } while (g !== 0);
+  if (f === 0) {
+    h++;
   }
-}
 
-console.log(registers.h);
+  g = b;
+  g -= c;
+  if (g === 0) {
+    done = true;
+  } else {
+    b += 17;
+  }
+} while (!done);
