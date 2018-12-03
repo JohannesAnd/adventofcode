@@ -3,21 +3,16 @@ const fs = require('fs');
 const input = fs.readFileSync('./input.txt', 'utf-8');
 
 const result = input.split('\n').reduce(([two, three], word) => {
-  const set = {};
+  const set = word.split('').reduce((s, c) => {
+    s[c] = (s[c] || 0) + 1;
 
-  for (char of word) {
-    set[char] = (set[char] || 0) + 1;
-  }
+    return s;
+  }, {})
 
-  if (Object.values(set).includes(2)) {
-    two += 1
-  }
-
-  if (Object.values(set).includes(3)) {
-    three += 1
-  }
-
-  return [two, three];
+  return [
+    two + Object.values(set).includes(2),
+    three + Object.values(set).includes(3)
+  ];
 }, [0, 0]).reduce((val, number) => val * number, 1);
 
 console.log(result);
