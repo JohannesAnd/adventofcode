@@ -1,21 +1,16 @@
-const fs = require('fs');
+function getFuel(mass) {
+  const fuel = Math.floor(mass / 3) - 2;
 
-const numbers = fs.readFileSync('./input.txt', 'utf-8').split('\n').map(n => Number(n));
+  if (fuel <= 0) return 0;
 
-let found = false;
-let index = 0;
-let frequency = 0;
-let frequencies = new Set();
-
-while(!found) {
-  frequency = frequency + numbers[index];
-
-  if (frequencies.has(frequency)) {
-    found = true;
-  }
-
-  frequencies.add(frequency);
-  index = (index + 1) % numbers.length;
+  return fuel + getFuel(fuel);
 }
 
-console.log(frequency);
+console.log(
+  require("fs")
+    .readFileSync("./input.txt", "utf-8")
+    .split("\n")
+    .map(line => Number(line))
+    .map(mass => getFuel(mass))
+    .reduce((s, v) => s + v, 0)
+);

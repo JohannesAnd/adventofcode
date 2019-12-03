@@ -1,7 +1,8 @@
-const fs = require('fs');
-
-const input = fs.readFileSync('./input.txt', 'utf-8');
-
-const result = input.split('\n').map(n => Number(n)).reduce((s, v) => s +v, 0);
-
-console.log(result);
+console.log(
+  require("fs")
+    .readFileSync("./input.txt", "utf-8")
+    .split("\n")
+    .map(line => Number(line))
+    .map(mass => Math.floor(mass / 3) - 2)
+    .reduce((s, v) => s + v, 0)
+);

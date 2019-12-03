@@ -1,18 +1,25 @@
-const fs = require('fs');
+const numbers = require("fs")
+  .readFileSync("./input.txt", "utf-8")
+  .split(",")
+  .map(n => Number(n));
 
-const input = fs.readFileSync('./input.txt', 'utf-8');
+function run() {
+  numbers[1] = 12;
+  numbers[2] = 2
+  for (let i = 0; i < numbers.length; i += 4) {
+    switch (numbers[i]) {
+      case 1:
+        numbers[numbers[i + 3]] =
+          numbers[numbers[i + 1]] + numbers[numbers[i + 2]];
+        break;
+      case 2:
+        numbers[numbers[i + 3]] =
+          numbers[numbers[i + 1]] * numbers[numbers[i + 2]];
+        break;
+      case 99:
+        return numbers[0];
+    }
+  }
+}
 
-const result = input.split('\n').reduce(([two, three], word) => {
-  const set = word.split('').reduce((s, c) => {
-    s[c] = (s[c] || 0) + 1;
-
-    return s;
-  }, {})
-
-  return [
-    two + Object.values(set).includes(2),
-    three + Object.values(set).includes(3)
-  ];
-}, [0, 0]).reduce((val, number) => val * number, 1);
-
-console.log(result);
+console.log(run());
