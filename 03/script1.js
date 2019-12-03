@@ -1,25 +1,54 @@
-const fs = require('fs');
+const [wire1, wire2] = require("fs")
+  .readFileSync("./input.txt", "utf-8")
+  .split("\n")
+  .map(w => w.split(","));
 
-const input = fs
-  .readFileSync('./input.txt', 'utf-8')
-  .split('\n')
-  .map(line => line
-    .split(/[( @ )(,)(: )(x)]+/)
-    .map((str, i) => i === 0 ? str : parseInt(str))
-  );
+function computePoints(wire) {
+  let x = 0;
+  let y = 0;
 
-const grid = {};
+  return wire.flatMap(element => {
+    const direction = element[0];
+    const length = Number(element.substring(1));
+    let points = [];
 
-for ([id, xStart, yStart, width, height] of input) {
-  for (let x = xStart; x < xStart + width; x++) {
-    for (let y = yStart; y < yStart + height; y++) {
-      const coord = `${x}|${y}`;
- 
-      grid[coord] = (grid[coord] || 0) + 1;
+    switch (direction) {
+      case "L":
+        points = new Array(length).fill().map((_, i) => `${x - i - 1}:${y}`);
+        x -= length;
+
+        break;
+      case "R":
+        points = new Array(length).fill().map((_, i) => `${x + i + 1}:${y}`);
+        x += length;
+
+        break;
+      case "U":
+        points = new Array(length).fill().map((_, i) => `${x}:${y + i + 1}`);
+        y += length;
+
+        break;
+      case "D":
+        points = new Array(length).fill().map((_, i) => `${x}:${y - i - 1}`);
+        y -= length;
     }
-  }
+
+    return points;
+  });
 }
 
-const result = Object.values(grid).filter(v => v > 1).length;
+const wire1Points = computePoints(wire1);
 
-console.log(result);
+const crossings = computePoints(wire2).filter(point =>
+  wire1Points.includes(point)
+);
+
+const sortedDistances = crossings
+  .map(point => {
+    const [x, y] = point.split(":").map(p => Number(p));
+
+    return x + y;
+  })
+  .sort((a, b) => a - b);
+
+console.log(sortedDistances[0]);
