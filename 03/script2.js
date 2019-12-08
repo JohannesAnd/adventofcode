@@ -48,9 +48,7 @@ const crossings = computePoints(wire2)
   .filter(({ index2 }) => index2 > -1);
 
 const sortedDistances = crossings
-  .map(({ index1, index2 }) => {
-    return index1 + index2 + 2;
-  })
+  .map(({ index1, index2 }) => index1 + index2 + 2)
   .sort((a, b) => a - b);
 
 console.log(sortedDistances[0]);
